@@ -1,0 +1,20 @@
+aws_bucket = "staging-eu-west-2.terraform-state.ch.gov.uk"
+remote_state_bucket = "ch-service-staging-terraform-state"
+environment = "staging"
+deploy_to = "staging"
+state_prefix = "env:/staging"
+aws_profile = "staging-eu-west-2"
+enable_container_insights = true
+
+# Certificate for https access through ALB
+ssl_certificate_id = "arn:aws:acm:eu-west-2:250991044064:certificate/56b76dab-5728-4f83-a16d-e3dd59cd82c8"
+zone_id = "" # no route53 for staging yet so empty zone id
+external_top_level_domain = "-staging.company-information.service.gov.uk"
+
+ec2_key_pair_name = "ch-aws-staging"
+
+# EC2 sizing and scaling options
+ec2_instance_type = "t3.medium"
+asg_max_instance_count = 3 # allow staging to scale up
+asg_min_instance_count = 0 # scaled to zero as all services use fargate
+asg_desired_instance_count = 0 # scaled to zero as all services use fargate

@@ -1,0 +1,21 @@
+aws_bucket = "live-eu-west-2.terraform-state.ch.gov.uk"
+remote_state_bucket = "ch-service-live-terraform-state"
+environment = "live"
+deploy_to = "live"
+state_prefix = "env:/live"
+aws_profile = "live-eu-west-2"
+enable_container_insights = true
+
+# Certificate for https access through ALB
+ssl_certificate_id = "arn:aws:acm:eu-west-2:449229032822:certificate/5c57a264-3168-4de8-8767-40fd0cedebf0"
+zone_id = "" # no route53 for live yet so empty zone id
+external_top_level_domain = ".company-information.service.gov.uk"
+internal_albs = false # external ALBs required for live dev site
+
+ec2_key_pair_name = "ch-aws-live"
+
+# EC2 sizing and scaling options
+ec2_instance_type = "t3.medium"
+asg_max_instance_count = 6 # allow live to scale up to 2 instances per az if required
+asg_min_instance_count = 0 # scaled to zero as all services use fargate
+asg_desired_instance_count = 0 # scaled to zero as all services use fargate
