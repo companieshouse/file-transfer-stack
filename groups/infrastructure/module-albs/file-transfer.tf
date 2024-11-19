@@ -41,7 +41,7 @@ resource "aws_lb" "filetransfer_alb" {
   count = "${var.file_transfer_create_alb == 1 ? 1 : 0}"
 
   name               = "${var.env}-${var.service}-filetransfer"
-  subnets            = ["${split(",", var.routing_ids)}"]
+  subnets            = var.subnet_ids
   security_groups    = ["${aws_security_group.file_transfer_alb.id}"]
   internal           = true
   load_balancer_type = "application"

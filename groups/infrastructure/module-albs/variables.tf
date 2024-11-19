@@ -74,7 +74,6 @@ variable "gateway_ids_list" {
 variable "secure_data_app_create_alb" {
   description = "Override with value of 1 if this ALB is required in the environment"
 }
-variable "public_ids" {}
 variable "alb_ssl_policy" {
   description = "The name of the SSL policy to use on ALB HTTPS listeners"
 }
