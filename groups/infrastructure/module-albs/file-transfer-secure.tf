@@ -75,36 +75,6 @@ resource "aws_lb_target_group_attachment" "secure_file_transfer_8080" {
   port             = 8080
 }
 
-resource "aws_route53_record" "secure_file_transfer_alb_r53_record" {
-  count = "${var.secure_file_transfer_create_alb == 1 && var.secure_file_transfer_route53_target == "alb" ? var.create_route_53 : 0}"
-
-  zone_id         = "${var.zone_id}"
-  name            = "secure-file-transfer.${var.env}.${var.zone_name}"
-  type            = "A"
-  allow_overwrite = true
-
-  alias {
-    name                   = "${aws_lb.secure_file_transfer_alb.dns_name}"
-    zone_id                = "${aws_lb.secure_file_transfer_alb.zone_id}"
-    evaluate_target_health = false
-  }
-}
-
-resource "aws_lb_listener" "secure_file_transfer_443" {
-  count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
-
-  load_balancer_arn = "${aws_lb.secure_data_app_alb.arn}"
-  port              = "443"
-  protocol          = "HTTPS"
-  ssl_policy        = "${var.alb_ssl_policy}"
-  certificate_arn   = "${var.ssl_certificate_id}"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = "${aws_lb_target_group.secure_file_transfer_18538.arn}"
-  }
-}
-
 
 resource "aws_lb_target_group" "secure_file_transfer_18538" {
   count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
