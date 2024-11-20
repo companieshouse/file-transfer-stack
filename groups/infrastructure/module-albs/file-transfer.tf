@@ -29,7 +29,7 @@ resource "aws_security_group" "file_transfer_alb" {
 
   tags {
     environment = "${var.environment}"
-    Name        = "${var.environment}-${var.service}-filetransferapi"
+    Name        = "${var.environment}-filetransferapi"
   }
 
 }
@@ -84,7 +84,7 @@ resource "aws_lb_listener" "filetransfer_443" {
 resource "aws_lb_target_group" "filetransfer_18020" {
   count = "${var.file_transfer_create_alb == 1 ? 1 : 0}"
 
-  name     = "${var.environment}-${var.service}-filetransfer-18020"
+  name     = "${var.environment}-filetransfer-18020"
   port     = 18020
   protocol = "HTTP"
   vpc_id   = "${var.vpc_id}"
@@ -110,7 +110,7 @@ resource "aws_lb_target_group_attachment" "filetransfer_18020" {
 }
 
 resource "aws_route53_record" "filetransfer_alb_r53_record" {
-  count = "${var.file_transfer_create_alb == 1 && var.filetransfer_route53_target == "alb" ? var.create_route_53 : 0}"
+  count   = "${var.zone_id == "" ? 0 : 1}" # zone_id defaults to empty string giving count = 0 i.e. not route 53 record
 
   zone_id         = "${var.zone_id}"
   name            = "filetransfer${var.external_top_level_domain}"
