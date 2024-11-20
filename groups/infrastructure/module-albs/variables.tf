@@ -59,9 +59,7 @@ variable "file_transfer_create_alb" {
 variable "secure_file_transfer_internet_facing" {
   default = 0
 }
-variable "secure_file_transfer_create_elb" {
-  description = "Override with value 0 if this ELB is not required in the environment"
-}
+
 variable "gateway_ids_list" {
   description = "Contains a list of instance IDs for the deployment's gateway(s)"
   default     = []
