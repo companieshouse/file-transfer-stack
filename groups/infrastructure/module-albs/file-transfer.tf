@@ -29,7 +29,7 @@ resource "aws_security_group" "file_transfer_alb" {
 
   tags {
     environment = "${var.environment}"
-    Name        = "${var.environment}-filetransferapi"
+    Name        = "${var.environment}-filetransfer"
   }
 
 }
