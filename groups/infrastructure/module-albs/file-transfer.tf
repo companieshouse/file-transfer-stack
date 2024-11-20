@@ -28,9 +28,8 @@ resource "aws_security_group" "file_transfer_alb" {
   }
 
   tags {
-    environment = "${var.env}"
-    service     = "${var.service}"
-    Name        = "${var.env}-${var.service}-filetransferapi"
+    environment = "${var.environment}"
+    Name        = "${var.environment}-${var.service}-filetransferapi"
   }
 
 }
@@ -40,7 +39,7 @@ resource "aws_security_group" "file_transfer_alb" {
 resource "aws_lb" "filetransfer_alb" {
   count = "${var.file_transfer_create_alb == 1 ? 1 : 0}"
 
-  name               = "${var.env}-${var.service}-filetransfer"
+  name               = "${var.environment}-filetransfer"
   subnets            = var.subnet_ids
   security_groups    = ["${aws_security_group.file_transfer_alb.id}"]
   internal           = true
@@ -48,9 +47,8 @@ resource "aws_lb" "filetransfer_alb" {
   idle_timeout       = 400
 
   tags {
-    environment = "${var.env}"
-    service     = "${var.service}"
-    Name        = "${var.env}-${var.service}-filetransfer"
+    environment = "${var.environment}"
+    Name        = "${var.environment}-filetransfer"
     ALB         = "true"
   }
 }
@@ -74,7 +72,7 @@ resource "aws_lb_listener" "filetransfer_443" {
   load_balancer_arn = "${aws_lb.filetransfer_alb.arn}"
   port              = "443"
   protocol          = "HTTPS"
-  ssl_policy        = "${var.alb_ssl_policy}"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
   certificate_arn   = "${var.ssl_certificate_id}"
 
   default_action {
@@ -86,7 +84,7 @@ resource "aws_lb_listener" "filetransfer_443" {
 resource "aws_lb_target_group" "filetransfer_18020" {
   count = "${var.file_transfer_create_alb == 1 ? 1 : 0}"
 
-  name     = "${var.env}-${var.service}-filetransfer-18020"
+  name     = "${var.environment}-${var.service}-filetransfer-18020"
   port     = 18020
   protocol = "HTTP"
   vpc_id   = "${var.vpc_id}"
@@ -115,7 +113,7 @@ resource "aws_route53_record" "filetransfer_alb_r53_record" {
   count = "${var.file_transfer_create_alb == 1 && var.filetransfer_route53_target == "alb" ? var.create_route_53 : 0}"
 
   zone_id         = "${var.zone_id}"
-  name            = "filetransfer.${var.env}.${var.zone_name}"
+  name            = "filetransfer${var.external_top_level_domain}"
   type            = "A"
   allow_overwrite = true
 
