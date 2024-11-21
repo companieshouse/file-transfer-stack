@@ -22,20 +22,20 @@ resource "aws_lb" "filetransfer_alb" {
 resource "aws_lb_listener" "filetransfer_80" {
   count = "${var.file_transfer_create_alb == 1 ? 1 : 0}"
 
-  load_balancer_arn = "${aws_lb.filetransfer_alb.arn}"
+  load_balancer_arn = "${aws_lb.filetransfer_alb[0].arn}"
   port              = "80"
   protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = "${aws_lb_target_group.filetransfer_18020.arn}"
+    target_group_arn = "${aws_lb_target_group.filetransfer_18020[0].arn}"
   }
 }
 
 resource "aws_lb_listener" "filetransfer_443" {
   count = "${var.file_transfer_create_alb == 1 ? 1 : 0}"
 
-  load_balancer_arn = "${aws_lb.filetransfer_alb.arn}"
+  load_balancer_arn = "${aws_lb.filetransfer_alb[0].arn}"
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
@@ -43,7 +43,7 @@ resource "aws_lb_listener" "filetransfer_443" {
 
   default_action {
     type             = "forward"
-    target_group_arn = "${aws_lb_target_group.filetransfer_18020.arn}"
+    target_group_arn = "${aws_lb_target_group.filetransfer_18020[0].arn}"
   }
 }
 
@@ -83,8 +83,8 @@ resource "aws_route53_record" "filetransfer_alb_r53_record" {
   allow_overwrite = true
 
   alias {
-    name                   = "${aws_lb.filetransfer_alb.dns_name}"
-    zone_id                = "${aws_lb.filetransfer_alb.zone_id}"
+    name                   = "${aws_lb.filetransfer_alb[0].dns_name}"
+    zone_id                = "${aws_lb.filetransfer_alb[0].zone_id}"
     evaluate_target_health = false
   }
 }

@@ -18,7 +18,7 @@ resource "aws_lb" "secure_file_transfer_alb" {
 resource "aws_lb_listener" "secure_file_transfer_80" {
   count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
 
-  load_balancer_arn = "${aws_lb.secure_file_transfer_alb.arn}"
+  load_balancer_arn = "${aws_lb.secure_file_transfer_alb[0].arn}"
   port              = "80"
   protocol          = "HTTP"
 
@@ -31,7 +31,7 @@ resource "aws_lb_listener" "secure_file_transfer_80" {
 resource "aws_lb_listener" "secure_file_transfer_443" {
   count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
 
-  load_balancer_arn = "${aws_lb.secure_file_transfer_alb.arn}"
+  load_balancer_arn = "${aws_lb.secure_file_transfer_alb[0].arn}"
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
@@ -47,7 +47,7 @@ resource "aws_lb_listener" "secure_file_transfer_443" {
   }
 }
 resource "aws_lb_target_group" "secure_file_transfer_8080" {
-#  count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
+  count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
 
   name     = "${var.environment}-secure-file-transfer-8080"
   port     = 8080
@@ -76,7 +76,7 @@ resource "aws_lb_target_group_attachment" "secure_file_transfer_8080" {
 
 
 resource "aws_lb_target_group" "secure_file_transfer_18538" {
-#  count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
+  count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
 
   name     = "${var.environment}-secure-file-transfer-18538"
   port     = 18538
@@ -112,8 +112,8 @@ resource "aws_route53_record" "secure_file_transfer_alb_r53_record" {
   allow_overwrite = true
 
   alias {
-    name                   = "${aws_lb.secure_file_transfer_alb.dns_name}"
-    zone_id                = "${aws_lb.secure_file_transfer_alb.zone_id}"
+    name                   = "${aws_lb.secure_file_transfer_alb[0].dns_name}"
+    zone_id                = "${aws_lb.secure_file_transfer_alb[0].zone_id}"
     evaluate_target_health = false
   }
 }
