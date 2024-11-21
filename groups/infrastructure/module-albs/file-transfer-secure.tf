@@ -98,7 +98,7 @@ resource "aws_lb_target_group" "secure_file_transfer_18538" {
 resource "aws_lb_target_group_attachment" "secure_file_transfer_18538" {
 
   target_group_arn = "${aws_lb_target_group.secure_file_transfer_18538[0].arn}"
-  target_id        = "${element(var.gateway_ids_list, count.index)}"
+  target_id        = "${element(var.gateway_ids_list, 0)}"
   port             = 18538
 }
 
