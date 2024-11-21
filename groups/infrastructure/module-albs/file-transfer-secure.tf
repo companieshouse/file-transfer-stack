@@ -69,8 +69,8 @@ resource "aws_lb_target_group" "secure_file_transfer_8080" {
 resource "aws_lb_target_group_attachment" "secure_file_transfer_8080" {
   count = "${var.secure_file_transfer_create_alb == 1 ? length(var.gateway_ids_list) : 0}"
 
-  target_group_arn = "${aws_lb_target_group.secure_file_transfer_8080.arn}"
-  target_id        = "${element(var.gateway_ids_list, count.index)}"
+  target_group_arn = "${aws_lb_target_group.secure_file_transfer_8080[0].arn}"
+  target_id        = "${element(var.gateway_ids_list, 0)}"
   port             = 8080
 }
 
