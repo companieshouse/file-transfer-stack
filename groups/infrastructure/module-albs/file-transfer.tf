@@ -1,38 +1,4 @@
-# A security group for the ALB so it is accessible via the internal network
-resource "aws_security_group" "file_transfer_alb" {
-  count       = "${var.file_transfer_create_elb == 1 || var.file_transfer_create_alb == 1 ? 1 : 0}"
-  vpc_id      = "${var.vpc_id}"
 
-  # HTTP access from anywhere (on the internal network as this alb is hardcoded to internal = true)
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # SSL access from anywhere (on the internal network as this alb is hardcoded to internal = true)
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # outbound internet access
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags {
-    environment = "${var.environment}"
-    Name        = "${var.environment}-filetransfer"
-  }
-
-}
 #------------------------------------------------------------------------------
 # ALB Resources
 #------------------------------------------------------------------------------
@@ -41,12 +7,12 @@ resource "aws_lb" "filetransfer_alb" {
 
   name               = "${var.environment}-filetransfer"
   subnets            = var.subnet_ids
-  security_groups    = ["${aws_security_group.file_transfer_alb.id}"]
+  security_groups    = ["${aws_security_group.file-transfer-sg.id}"]
   internal           = true
   load_balancer_type = "application"
   idle_timeout       = 400
 
-  tags {
+  tags ={
     environment = "${var.environment}"
     Name        = "${var.environment}-filetransfer"
     ALB         = "true"
@@ -102,8 +68,6 @@ resource "aws_lb_target_group" "filetransfer_18020" {
 }
 
 resource "aws_lb_target_group_attachment" "filetransfer_18020" {
-  count = "${var.file_transfer_create_alb == 1 ? length(var.gateway_ids_list) : 0}"
-
   target_group_arn = "${aws_lb_target_group.filetransfer_18020.arn}"
   target_id        = "${element(var.gateway_ids_list, count.index)}"
   port             = 18020

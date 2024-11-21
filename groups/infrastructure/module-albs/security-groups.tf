@@ -56,7 +56,7 @@ resource "aws_security_group" "secure-file-transfer_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
+  tags ={
     environment = "${var.environment}"
     Name        = "${var.environment}-secure-alb-sg"
   }
