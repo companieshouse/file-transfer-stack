@@ -9,7 +9,7 @@ resource "aws_lb" "secure_file_transfer_alb" {
   idle_timeout       = 400
 
   tags ={
-    environment = "${var.environment}"
+    Environment = "${var.environment}"
     Name        = "${var.environment}-secure-filetransfer"
     ALB         = "true"
   }
@@ -24,7 +24,7 @@ resource "aws_lb_listener" "secure_file_transfer_80" {
 
   default_action {
     type             = "forward"
-    target_group_arn = "${aws_lb_target_group.secure_file_transfer_8080.arn}"
+    target_group_arn = "${aws_lb_target_group.secure_file_transfer_8080[0].arn}"
   }
 }
 
@@ -97,7 +97,7 @@ resource "aws_lb_target_group" "secure_file_transfer_18538" {
 
 resource "aws_lb_target_group_attachment" "secure_file_transfer_18538" {
 
-  target_group_arn = "${aws_lb_target_group.secure_file_transfer_18538.arn}"
+  target_group_arn = "${aws_lb_target_group.secure_file_transfer_18538[0].arn}"
   target_id        = "${element(var.gateway_ids_list, count.index)}"
   port             = 18538
 }

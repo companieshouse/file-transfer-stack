@@ -12,8 +12,8 @@ resource "aws_lb" "filetransfer_alb" {
   load_balancer_type = "application"
   idle_timeout       = 400
 
-  tags ={
-    environment = "${var.environment}"
+  tags = {
+    Environment = "${var.environment}"
     Name        = "${var.environment}-filetransfer"
     ALB         = "true"
   }
@@ -68,7 +68,8 @@ resource "aws_lb_target_group" "filetransfer_18020" {
 }
 
 resource "aws_lb_target_group_attachment" "filetransfer_18020" {
-  target_group_arn = "${aws_lb_target_group.filetransfer_18020.arn}"
+  count = "${var.file_transfer_create_alb == 1 ? length(var.gateway_ids_list) : 0}"
+  target_group_arn = "${aws_lb_target_group.filetransfer_18020[0].arn}"
   target_id        = "${element(var.gateway_ids_list, count.index)}"
   port             = 18020
 }
