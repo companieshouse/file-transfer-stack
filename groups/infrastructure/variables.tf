@@ -116,3 +116,13 @@ variable "enable_container_insights" {
 variable "secure_data_app_internet_facing" {
   default = 0
 }
+
+# Count variables for - ECS
+variable "secure_file_transfer_create_alb" {
+  description = "Override with value of 1 if this ALB is required in the environment"
+  default = 1
+}
+variable "file_transfer_create_alb" {
+  description = "Override with value 0 if this ELB is not required in the environment"
+  default = 1
+}
