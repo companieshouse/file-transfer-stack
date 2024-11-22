@@ -1,7 +1,7 @@
 resource "aws_lb" "secure_file_transfer_alb" {
   count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
 
-  name               = "${var.environment}-secure-filetransfer"
+  name               = "${var.environment}-secure-file-transfer"
   subnets            = var.subnet_ids
   security_groups    = ["${aws_security_group.secure-file-transfer_sg.id}"]
   internal           = "${var.secure_file_transfer_internet_facing == 0 ? true : false}"
@@ -10,7 +10,7 @@ resource "aws_lb" "secure_file_transfer_alb" {
 
   tags ={
     Environment = "${var.environment}"
-    Name        = "${var.environment}-secure-filetransfer"
+    Name        = "${var.environment}-secure-file-transfer"
     ALB         = "true"
   }
 }
