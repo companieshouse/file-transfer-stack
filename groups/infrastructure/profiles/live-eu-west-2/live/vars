@@ -19,3 +19,6 @@ ec2_instance_type = "t3.medium"
 asg_max_instance_count = 6 # allow live to scale up to 2 instances per az if required
 asg_min_instance_count = 0 # scaled to zero as all services use fargate
 asg_desired_instance_count = 0 # scaled to zero as all services use fargate
+
+secure_file_transfer_create_alb = 1
+file_transfer_create_alb = 1
