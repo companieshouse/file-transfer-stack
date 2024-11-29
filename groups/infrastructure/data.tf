@@ -22,22 +22,6 @@ data "aws_subnet" "application" {
   id       = each.value
 }
 
-data "aws_subnets" "public" {
-  filter {
-    name   = "tag:NetworkType"
-    values = ["public"]
-  }
-  filter {
-    name   = "tag:Name"
-    values = [local.public_subnet_pattern]
-  }
-}
-
-data "aws_subnet" "public" {
-  for_each = toset(data.aws_subnets.public.ids)
-  id       = each.value
-}
-
 data "aws_vpc" "vpc" {
   filter {
     name   = "tag:Name"

@@ -4,7 +4,7 @@ resource "aws_lb" "secure_file_transfer_alb" {
   name               = "${var.environment}-secure-file-transfer"
   subnets            = var.subnet_ids
   security_groups    = ["${aws_security_group.secure-file-transfer_sg.id}"]
-  internal           = "${var.secure_file_transfer_internet_facing == 0 ? true : false}"
+  internal           = true
   load_balancer_type = "application"
   idle_timeout       = 400
 
@@ -15,18 +15,6 @@ resource "aws_lb" "secure_file_transfer_alb" {
   }
 }
 
-resource "aws_lb_listener" "secure_file_transfer_80" {
-  count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
-
-  load_balancer_arn = "${aws_lb.secure_file_transfer_alb[0].arn}"
-  port              = "80"
-  protocol          = "HTTP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = "${aws_lb_target_group.secure_file_transfer_8080[0].arn}"
-  }
-}
 
 resource "aws_lb_listener" "secure_file_transfer_443" {
   count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
@@ -46,33 +34,6 @@ resource "aws_lb_listener" "secure_file_transfer_443" {
     }
   }
 }
-resource "aws_lb_target_group" "secure_file_transfer_8080" {
-  count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
-
-  name     = "${var.environment}-secure-file-transfer-8080"
-  port     = 8080
-  protocol = "HTTP"
-  vpc_id   = "${var.vpc_id}"
-
-  health_check {
-    healthy_threshold   = "2"
-    unhealthy_threshold = "2"
-    interval            = "30"
-    matcher             = "200"
-    path                = "/haproxy_healthcheck"
-    port                = "9090"
-    protocol            = "HTTP"
-    timeout             = "3"
-  }
-}
-
-resource "aws_lb_target_group_attachment" "secure_file_transfer_8080" {
-  count = "${var.secure_file_transfer_create_alb == 1 ? length(var.gateway_ids_list) : 0}"
-
-  target_group_arn = "${aws_lb_target_group.secure_file_transfer_8080[0].arn}"
-  target_id        = "${element(var.gateway_ids_list, 0)}"
-  port             = 8080
-}
 
 
 resource "aws_lb_target_group" "secure_file_transfer_18538" {
@@ -80,7 +41,7 @@ resource "aws_lb_target_group" "secure_file_transfer_18538" {
 
   name     = "${var.environment}-secure-file-transfer-18538"
   port     = 18538
-  protocol = "HTTP"
+  protocol = "HTTPS"
   vpc_id   = "${var.vpc_id}"
 
   health_check {
@@ -90,7 +51,7 @@ resource "aws_lb_target_group" "secure_file_transfer_18538" {
     matcher             = "200"
     path                = "/haproxy_healthcheck"
     port                = "9090"
-    protocol            = "HTTP"
+    protocol            = "HTTPS"
     timeout             = "3"
   }
 }

@@ -14,10 +14,6 @@ locals {
 
   parameter_store_secrets = {
     "vpc-name"                 = local.stack_secrets["vpc_name"],
-    "web-oauth2-client-id"     = local.stack_secrets["web-oauth2-client-id"],
-    "web-oauth2-client-secret" = local.stack_secrets["web-oauth2-client-secret"],
-    "web-oauth2-cookie-secret" = local.stack_secrets["web-oauth2-cookie-secret"],
-    "web-oauth2-request-key"   = local.stack_secrets["web-oauth2-request-key"]
   }
 
   application_ids   = data.aws_subnets.application.ids

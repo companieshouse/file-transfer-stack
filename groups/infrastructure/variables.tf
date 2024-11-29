@@ -113,9 +113,6 @@ variable "enable_container_insights" {
   description = "A boolean value indicating whether to enable Container Insights or not"
   default     = false
 }
-variable "secure_data_app_internet_facing" {
-  default = 0
-}
 
 # Count variables for - ECS
 variable "secure_file_transfer_create_alb" {
