@@ -20,7 +20,7 @@ locals {
   application_cidrs = [for s in data.aws_subnet.application : s.cidr_block]
 
   lb_subnet_ids    = local.application_ids  # place ALB in correct subnets
-  lb_access_cidrs  = var.internal_albs ? concat(local.internal_cidrs,local.vpn_cidrs,local.management_private_subnet_cidrs,split(",",local.application_cidrs)) : local.public_lb_cidrs
+  lb_access_cidrs  = concat(local.internal_cidrs,local.vpn_cidrs,local.management_private_subnet_cidrs,split(",",local.application_cidrs))
 
   internal_cidrs                  = values(data.terraform_remote_state.networks_common_infra.outputs.internal_cidrs)
   vpn_cidrs                       = values(data.terraform_remote_state.networks_common_infra.outputs.vpn_cidrs)
