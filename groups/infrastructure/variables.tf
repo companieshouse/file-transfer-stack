@@ -19,12 +19,6 @@ variable "cert_domain" {
   description = "The certificate domain to use."
 }
 
-# Terraform
-variable "alb_internal" {
-  type        = string
-  description = "Internal or External ALB."
-}
-
 # EC2
 variable "ec2_key_pair_name" {
   type        = string
