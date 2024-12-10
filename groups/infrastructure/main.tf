@@ -59,7 +59,7 @@ module "file_transfer_alb" {
   subnet_ids          = values(local.routing_subnet_ids)
   vpc_id              = data.aws_vpc.vpc.id
   idle_timeout        = 1200
-
+  route53_domain_name     = var.cert_domain
   create_security_group  = true
   internal               = true
   ingress_cidrs          = ["0.0.0.0/0"]
@@ -83,7 +83,7 @@ module "file_transfer_alb" {
     subnet_ids          = values(local.routing_subnet_ids)
     vpc_id              = data.aws_vpc.vpc.id
     idle_timeout        = 1200
-
+    route53_domain_name = var.cert_domain
     create_security_group  = true
     internal               = true
     ingress_cidrs          = ["0.0.0.0/0"]
