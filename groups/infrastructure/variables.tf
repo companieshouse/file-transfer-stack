@@ -14,22 +14,15 @@ variable "aws_profile" {
   description = "The AWS profile to use for deployment."
 }
 
+variable "cert_domain" {
+  type        = string
+  description = "The certificate domain to use."
+}
+
 # Terraform
-variable "aws_bucket" {
+variable "alb_internal" {
   type        = string
-  description = "The bucket used to store the current terraform state files"
-}
-variable "remote_state_bucket" {
-  type        = string
-  description = "Alternative bucket used to store the remote state files from ch-service-terraform"
-}
-variable "state_prefix" {
-  type        = string
-  description = "The bucket prefix used with the remote_state_bucket files."
-}
-variable "deploy_to" {
-  type        = string
-  description = "Bucket namespace used with remote_state_bucket and state_prefix."
+  description = "Internal or External ALB."
 }
 
 # EC2
@@ -111,7 +104,7 @@ variable "internal_albs" {
 variable "enable_container_insights" {
   type        = bool
   description = "A boolean value indicating whether to enable Container Insights or not"
-  default     = false
+  default     = true
 }
 
 # Count variables for - ECS

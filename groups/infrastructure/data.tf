@@ -28,3 +28,16 @@ data "aws_vpc" "vpc" {
     values = [local.vpc_name]
   }
 }
+
+data "aws_acm_certificate" "cert" {
+  domain = var.cert_domain
+}
+
+data "aws_subnet" "routing_subnets" {
+  count  = length(local.stack_secrets["routing_subnet_pattern"])
+  vpc_id = data.aws_vpc.vpc.id
+  filter {
+    name   = "tag:Name"
+    values = [local.stack_secrets["routing_subnet_pattern"][count.index]]
+  }
+}

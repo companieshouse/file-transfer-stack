@@ -48,17 +48,54 @@ module "secrets" {
   kms_key_id  = data.aws_kms_key.stack_configs.id
 }
 
-module "albs" {
-  source = "./module-albs"
+module "file_transfer_alb" {
+  count = "${var.file_transfer_create_alb == 1 ? 1 : 0}"
 
-  stack_name                = local.stack_name
-  name_prefix               = local.name_prefix
-  environment               = var.environment
-  vpc_id                    = data.aws_vpc.vpc.id
-  ssl_certificate_id        = var.ssl_certificate_id
-  zone_id                   = var.zone_id
-  external_top_level_domain = var.external_top_level_domain
-  subnet_ids                = local.lb_subnet_ids
-  web_access_cidrs          = local.lb_access_cidrs
-  internal_albs             = var.internal_albs
+
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
+  environment         = var.environment
+  service             = "file-transfer"
+  ssl_certificate_arn = data.aws_acm_certificate.cert.arn
+  subnet_ids          = values(local.routing_subnet_ids)
+  vpc_id              = data.aws_vpc.vpc.id
+  idle_timeout        = 1200
+
+  create_security_group  = true
+  internal               = true
+  ingress_cidrs          = ["0.0.0.0/0"]
+  redirect_http_to_https = true
+  service_configuration  = {
+    default = {
+      listener_config = {
+        default_action_type = "fixed-response"
+        port                = 443
+      }
+    }
+  }
 }
+
+  module "secure_file_transfer_alb" {
+    count = "${var.secure_file_transfer_create_alb == 1 ? 1 : 0}"
+    source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
+    environment         = var.environment
+    service             = "secure-file-transfer"
+    ssl_certificate_arn = data.aws_acm_certificate.cert.arn
+    subnet_ids          = values(local.routing_subnet_ids)
+    vpc_id              = data.aws_vpc.vpc.id
+    idle_timeout        = 1200
+
+    create_security_group  = true
+    internal               = true
+    ingress_cidrs          = ["0.0.0.0/0"]
+    redirect_http_to_https = true
+    service_configuration  = {
+      default = {
+        listener_config = {
+          default_action_type = "fixed-response"
+          content_type = "text/plain"
+          message_body = "OK"
+          status_code  = "404"
+        }
+      }
+    }
+  }
