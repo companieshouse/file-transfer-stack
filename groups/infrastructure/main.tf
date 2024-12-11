@@ -17,9 +17,9 @@ terraform {
   }
 }
 
-#module "ecs-cluster" {
-#  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-cluster?ref=1.0.296"
-#
+module "ecs-cluster" {
+  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-cluster?ref=1.0.296"
+
 #  stack_name                  = local.stack_name
 #  name_prefix                 = local.name_prefix
 #  environment                 = var.environment
@@ -37,7 +37,7 @@ terraform {
 #  scaleup_schedule            = var.asg_scaleup_schedule
 #  enable_asg_autoscaling      = var.enable_asg_autoscaling
 #  notify_topic_slack_endpoint = local.notify_topic_slack_endpoint
-#}
+}
 
 #module "secrets" {
 #  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.296"
