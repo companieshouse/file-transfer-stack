@@ -11,13 +11,9 @@ locals {
   vpc_name                    = local.stack_secrets["vpc_name"]
   notify_topic_slack_endpoint = local.stack_secrets["notify_topic_slack_endpoint"]
 
-  parameter_store_secrets = {
-    "vpc-name"                 = local.stack_secrets["vpc_name"],
-  }
   routing_subnet_ids = zipmap(
     data.aws_subnet.routing_subnets.*.availability_zone,
     data.aws_subnet.routing_subnets.*.id
   )
-  application_ids   = data.aws_subnets.application.ids
 
 }

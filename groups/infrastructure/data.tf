@@ -17,11 +17,6 @@ data "aws_subnets" "application" {
   }
 }
 
-data "aws_subnet" "application" {
-  for_each = toset(data.aws_subnets.application.ids)
-  id       = each.value
-}
-
 data "aws_vpc" "vpc" {
   filter {
     name   = "tag:Name"
