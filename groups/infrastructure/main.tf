@@ -35,16 +35,15 @@ module "file_transfer_alb" {
   create_security_group  = true
   internal               = var.alb_internal
   ingress_cidrs          = ["0.0.0.0/0"]
-  redirect_http_to_https = true
   service_configuration  = {
-    default = {
-      listener_config = {
+    listener_config = {
         default_action_type = "fixed-response"
+        protocol            = "HTTPS"
         port                = 443
       }
-    }
   }
 }
+
 
 module "secure_file_transfer_alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
@@ -61,18 +60,16 @@ module "secure_file_transfer_alb" {
   create_security_group  = true
   internal               = var.alb_internal
   ingress_cidrs          = ["0.0.0.0/0"]
-  redirect_http_to_https = true
   service_configuration  = {
-    default = {
-      listener_config = {
-        default_action_type = "fixed-response"
-        port                = 443
-      }
+    listener_config = {
+      default_action_type = "fixed-response"
+      protocol            = "HTTPS"
+      port                = 443
     }
   }
 }
 
-/*
+
 module "ecs-cluster" {
   source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-cluster?ref=1.0.296"
 
@@ -94,5 +91,4 @@ module "ecs-cluster" {
   enable_asg_autoscaling      = var.enable_asg_autoscaling
   notify_topic_slack_endpoint = local.notify_topic_slack_endpoint
 }
-*/
 
