@@ -5,7 +5,7 @@ deploy_to = "staging"
 state_prefix = "env:/staging"
 aws_profile = "staging-eu-west-2"
 enable_container_insights = true
-alb_internal = true
+
 cert_domain = "*.companieshouse.gov.uk"
 
 ec2_key_pair_name = "ch-aws-staging"

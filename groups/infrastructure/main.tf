@@ -33,7 +33,7 @@ module "file_transfer_alb" {
   route53_domain_name     = var.cert_domain
 
   create_security_group  = true
-  internal               = var.alb_internal
+  internal               = true
   ingress_cidrs          = ["0.0.0.0/0"]
   service_configuration  = {
     listener_config = {
@@ -58,7 +58,7 @@ module "secure_file_transfer_alb" {
   route53_domain_name     = var.cert_domain
 
   create_security_group  = true
-  internal               = var.alb_internal
+  internal               = true
   ingress_cidrs          = ["0.0.0.0/0"]
   service_configuration  = {
     listener_config = {
