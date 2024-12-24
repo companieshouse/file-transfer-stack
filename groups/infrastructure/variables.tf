@@ -79,10 +79,12 @@ variable "enable_container_insights" {
 
 # Count variables for - ECS
 variable "secure_file_transfer_create_alb" {
-  description = "Override with value of 1 if this ALB is required in the environment"
-  default = 1
+  type        = bool
+  description = "Override with value false if this ALB is not required in the environment"
+  default     = true
 }
 variable "file_transfer_create_alb" {
-  description = "Override with value 0 if this ELB is not required in the environment"
-  default = 1
+  type        = bool
+  description = "Override with value false if this ELB is not required in the environment"
+  default     = true
 }

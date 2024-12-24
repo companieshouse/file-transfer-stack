@@ -9,6 +9,3 @@ enable_container_insights = true
 cert_domain = "*.companieshouse.gov.uk"
 
 ec2_key_pair_name = "ch-aws-staging"
-
-secure_file_transfer_create_alb = 1
-file_transfer_create_alb = 1

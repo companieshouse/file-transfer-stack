@@ -4,6 +4,3 @@ enable_container_insights = true
 cert_domain = "cidev.aws.chdev.org"
 
 ec2_key_pair_name = "chs-cidev"
-
-secure_file_transfer_create_alb = 1
-file_transfer_create_alb = 1

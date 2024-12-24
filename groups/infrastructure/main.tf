@@ -22,7 +22,7 @@ terraform {
 
 module "file_transfer_alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
-  count = "${var.file_transfer_create_alb == 1 ? 1 : 0}"
+  count = var.file_transfer_create_alb ? 1 : 0
 
   environment         = var.environment
   service             = "file-transfer"
@@ -47,7 +47,7 @@ module "file_transfer_alb" {
 
 module "secure_file_transfer_alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
-  count = "${var.file_transfer_create_alb == 1 ? 1 : 0}"
+  count = var.file_transfer_create_alb ? 1 : 0
 
   environment         = var.environment
   service             = "secure-file-transfer"
