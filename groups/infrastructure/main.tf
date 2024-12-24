@@ -1,13 +1,13 @@
 terraform {
-  required_version = "~> 1.3"
+  required_version = ">= 1.3, < 2.0"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.54.0"
+      version = ">= 5.0, < 6.0"
     }
     vault = {
       source  = "hashicorp/vault"
-      version = "~> 3.18.0"
+      version = ">= 4.0, < 5.0"
     }
   }
 }
@@ -29,21 +29,25 @@ module "file_transfer_alb" {
   ssl_certificate_arn = data.aws_acm_certificate.cert.arn
   subnet_ids          = values(local.routing_subnet_ids)
   vpc_id              = data.aws_vpc.vpc.id
-  idle_timeout        = 1200
   route53_domain_name     = var.cert_domain
 
   create_security_group  = true
   internal               = true
-  ingress_cidrs          = ["0.0.0.0/0"]
+  ingress_cidrs          = local.ingress_cidrs_private
+  ingress_prefix_list_ids = local.ingress_prefix_list_ids
   service_configuration  = {
     listener_config = {
         default_action_type = "fixed-response"
         protocol            = "HTTPS"
         port                = 443
+        fixed_response      = {
+          content_type = "text/plain"
+          message_body = "OK"
+          status_code  = "404"
+        }
       }
   }
 }
-
 
 module "secure_file_transfer_alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
@@ -54,17 +58,22 @@ module "secure_file_transfer_alb" {
   ssl_certificate_arn = data.aws_acm_certificate.cert.arn
   subnet_ids          = values(local.routing_subnet_ids)
   vpc_id              = data.aws_vpc.vpc.id
-  idle_timeout        = 1200
   route53_domain_name     = var.cert_domain
 
   create_security_group  = true
   internal               = true
-  ingress_cidrs          = ["0.0.0.0/0"]
+  ingress_cidrs          = local.ingress_cidrs_private
+  ingress_prefix_list_ids = local.ingress_prefix_list_ids
   service_configuration  = {
     listener_config = {
       default_action_type = "fixed-response"
       protocol            = "HTTPS"
       port                = 443
+      fixed_response      = {
+        content_type = "text/plain"
+        message_body = "OK"
+        status_code  = "404"
+      }
     }
   }
 }
@@ -81,7 +90,6 @@ module "ecs-cluster" {
   subnet_ids                  = local.application_subnet_ids
   ec2_key_pair_name           = var.ec2_key_pair_name
   ec2_instance_type           = var.ec2_instance_type
-  ec2_image_id                = var.ec2_image_id
   asg_max_instance_count      = var.asg_max_instance_count
   asg_min_instance_count      = var.asg_min_instance_count
   enable_container_insights   = var.enable_container_insights
