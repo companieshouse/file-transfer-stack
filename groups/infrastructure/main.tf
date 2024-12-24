@@ -21,58 +21,58 @@ terraform {
 }
 
 module "file_transfer_alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
-  count = var.file_transfer_create_alb ? 1 : 0
+  source                    = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
+  count                     = var.file_transfer_create_alb ? 1 : 0
 
-  environment         = var.environment
-  service             = "file-transfer"
-  ssl_certificate_arn = data.aws_acm_certificate.cert.arn
-  subnet_ids          = values(local.routing_subnet_ids)
-  vpc_id              = data.aws_vpc.vpc.id
-  route53_domain_name     = var.cert_domain
+  environment               = var.environment
+  service                   = "file-transfer"
+  ssl_certificate_arn       = data.aws_acm_certificate.cert.arn
+  subnet_ids                = values(local.routing_subnet_ids)
+  vpc_id                    = data.aws_vpc.vpc.id
+  route53_domain_name       = var.cert_domain
 
-  create_security_group  = true
-  internal               = true
-  ingress_cidrs          = local.ingress_cidrs_private
-  ingress_prefix_list_ids = local.ingress_prefix_list_ids
-  service_configuration  = {
-    listener_config = {
+  create_security_group     = true
+  internal                  = true
+  ingress_cidrs             = local.ingress_cidrs_private
+  ingress_prefix_list_ids   = local.ingress_prefix_list_ids
+  service_configuration     = {
+    listener_config         = {
         default_action_type = "fixed-response"
         protocol            = "HTTPS"
         port                = 443
         fixed_response      = {
-          content_type = "text/plain"
-          message_body = "OK"
-          status_code  = "404"
+          content_type      = "text/plain"
+          message_body      = "OK"
+          status_code       = "404"
         }
       }
   }
 }
 
 module "secure_file_transfer_alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
-  count = var.file_transfer_create_alb ? 1 : 0
+  source                  = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
+  count                   = var.file_transfer_create_alb ? 1 : 0
 
-  environment         = var.environment
-  service             = "secure-file-transfer"
-  ssl_certificate_arn = data.aws_acm_certificate.cert.arn
-  subnet_ids          = values(local.routing_subnet_ids)
-  vpc_id              = data.aws_vpc.vpc.id
+  environment             = var.environment
+  service                 = "secure-file-transfer"
+  ssl_certificate_arn     = data.aws_acm_certificate.cert.arn
+  subnet_ids              = values(local.routing_subnet_ids)
+  vpc_id                  = data.aws_vpc.vpc.id
   route53_domain_name     = var.cert_domain
 
-  create_security_group  = true
-  internal               = true
-  ingress_cidrs          = local.ingress_cidrs_private
+  create_security_group   = true
+  internal                = true
+  ingress_cidrs           = local.ingress_cidrs_private
   ingress_prefix_list_ids = local.ingress_prefix_list_ids
-  service_configuration  = {
-    listener_config = {
+  service_configuration   = {
+    listener_config       = {
       default_action_type = "fixed-response"
       protocol            = "HTTPS"
       port                = 443
       fixed_response      = {
-        content_type = "text/plain"
-        message_body = "OK"
-        status_code  = "404"
+        content_type      = "text/plain"
+        message_body      = "OK"
+        status_code       = "404"
       }
     }
   }
