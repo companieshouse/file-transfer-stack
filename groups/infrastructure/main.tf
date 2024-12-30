@@ -41,9 +41,7 @@ module "file_transfer_alb" {
         protocol            = "HTTPS"
         port                = 443
         fixed_response      = {
-          content_type      = "text/plain"
-          message_body      = "OK"
-          status_code       = "404"
+          status_code       = 404
         }
       }
   }
