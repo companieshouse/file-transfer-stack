@@ -35,7 +35,6 @@ module "file_transfer_alb" {
   internal                  = true
   ingress_cidrs             = local.ingress_cidrs_private
   ingress_prefix_list_ids   = local.ingress_prefix_list_ids
-  /*
   service_configuration     = {
     listener_config         = {
         port                = 443
@@ -45,7 +44,6 @@ module "file_transfer_alb" {
         }
       }
   }
-  */
 }
 
 module "secure_file_transfer_alb" {
