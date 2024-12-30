@@ -35,15 +35,17 @@ module "file_transfer_alb" {
   internal                  = true
   ingress_cidrs             = local.ingress_cidrs_private
   ingress_prefix_list_ids   = local.ingress_prefix_list_ids
-  service_configuration     = {
-    listener_config         = {
-        port                = 443
+  service_configuration = {
+    "file_transfer" = {
+      listener_config = {
+        port = 443
         default_action_type = "fixed-response"
-        fixed_response      = {
-          status_code       = 404
+        fixed_response = {
+          content_type = "text/html"
+          status_code  = 400
         }
       }
-  }
+    }
 }
 
 module "secure_file_transfer_alb" {
