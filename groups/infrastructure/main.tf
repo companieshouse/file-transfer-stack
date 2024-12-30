@@ -36,7 +36,7 @@ module "file_transfer_alb" {
   ingress_cidrs             = local.ingress_cidrs_private
   ingress_prefix_list_ids   = local.ingress_prefix_list_ids
   service_configuration     = {
-    "service_a" = {}
+    "listener_config" = {}
   }
 }
 
