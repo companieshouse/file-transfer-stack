@@ -37,7 +37,7 @@ module "file_transfer_alb" {
   ingress_prefix_list_ids   = local.ingress_prefix_list_ids
   service_configuration     = {
     listener_config         = {
-        default_action_type = "fixed-response-wrong"
+        default_action_type = "fixed-response"
         protocol            = "HTTPS"
         port                = 443
         fixed_response      = {
