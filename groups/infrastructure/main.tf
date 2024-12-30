@@ -21,7 +21,7 @@ terraform {
 }
 
 module "file_transfer_alb" {
-  source                    = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
+  source                    = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.205"
   count                     = var.file_transfer_create_alb ? 1 : 0
 
   environment               = var.environment
@@ -35,9 +35,16 @@ module "file_transfer_alb" {
   internal                  = true
   ingress_cidrs             = local.ingress_cidrs_private
   ingress_prefix_list_ids   = local.ingress_prefix_list_ids
-  service_configuration     = {
+  service_configuration = {
     default = {
-      listener_config = {}
+      listener_config = {
+        default_action_type = "fixed-response"
+        port                = 443
+        fixed_response = {
+          message_body = "unauthorized"
+          status_code  = 401
+        }
+      }
     }
   }
 }
