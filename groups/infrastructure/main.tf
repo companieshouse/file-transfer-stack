@@ -36,14 +36,16 @@ module "file_transfer_alb" {
   ingress_cidrs             = local.ingress_cidrs_private
   ingress_prefix_list_ids   = local.ingress_prefix_list_ids
   service_configuration     = {
-    listener_config         = {
+    default = {
+      listener_config = {
         default_action_type = "fixed-response"
         protocol            = "HTTPS"
         port                = 443
         fixed_response      = {
-          status_code       = 404
+          status_code = 404
         }
       }
+    }
   }
 }
 
