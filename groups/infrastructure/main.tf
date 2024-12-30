@@ -41,8 +41,7 @@ module "file_transfer_alb" {
         default_action_type = "fixed-response"
         port                = 443
         fixed_response = {
-          message_body = "unauthorized"
-          status_code  = 401
+          status_code  = 404
         }
       }
     }
