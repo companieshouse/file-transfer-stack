@@ -39,7 +39,7 @@ module "file_transfer_alb" {
     listener_config         = {
         default_action_type = "fixed-response"
         protocol            = "HTTPS"
-        port                = 444
+        port                = 443
         fixed_response      = {
           status_code       = 404
         }
