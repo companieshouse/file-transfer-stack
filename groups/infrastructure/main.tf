@@ -38,14 +38,15 @@ module "file_transfer_alb" {
   service_configuration = {
     "file_transfer" = {
       listener_config = {
-        port = 443
+        port                = 443
         default_action_type = "fixed-response"
-        fixed_response = {
+        fixed_response      = {
           content_type = "text/html"
           status_code  = 400
         }
       }
     }
+  }
 }
 
 module "secure_file_transfer_alb" {
