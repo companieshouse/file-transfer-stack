@@ -89,3 +89,14 @@ variable "file_transfer_create_alb" {
   description = "Override with value false if this ELB is not required in the environment"
   default     = true
 }
+
+# DNS
+variable "zone_id" {
+  type        = string
+  description = "The ID of the hosted zone to contain the Route 53 record."
+}
+
+variable "external_top_level_domain" {
+  type        = string
+  description = "The type level of the DNS domain for external access."
+}
