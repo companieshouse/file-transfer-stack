@@ -1,5 +1,5 @@
 resource "aws_route53_record" "file_transfer_alb_r53_record" {
-  count   = var.zone_id == "" ? 0 : 1 # zone_id defaults to empty string giving count = 0 i.e. not route 53 record
+  count   = var.file_transfer_create_alb && trimspace(var.zone_id) != "" ? 1 : 0
 
   zone_id         = var.zone_id
   name            = "file-transfer${var.internal_top_level_domain}"
@@ -16,7 +16,7 @@ resource "aws_route53_record" "file_transfer_alb_r53_record" {
 }
 
 resource "aws_route53_record" "secure_file_transfer_alb_r53_record" {
-  count   = var.zone_id == "" ? 0 : 1 # zone_id defaults to empty string giving count = 0 i.e. not route 53 record
+  count   = var.secure_file_transfer_create_alb && trimspace(var.zone_id) != "" ? 1 : 0
 
   zone_id         = var.zone_id
   name            = "secure-file-transfer${var.internal_top_level_domain}"

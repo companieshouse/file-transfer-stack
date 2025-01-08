@@ -83,7 +83,6 @@ module "ecs-cluster" {
   aws_profile                 = var.aws_profile
   vpc_id                      = data.aws_vpc.vpc.id
   subnet_ids                  = local.application_subnet_ids
-  ec2_key_pair_name           = var.ec2_key_pair_name
   ec2_instance_type           = var.ec2_instance_type
   asg_max_instance_count      = var.asg_max_instance_count
   asg_min_instance_count      = var.asg_min_instance_count

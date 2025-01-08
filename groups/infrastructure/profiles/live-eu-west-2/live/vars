@@ -2,5 +2,3 @@ environment = "live"
 aws_profile = "live-eu-west-2"
 enable_container_insights = true
 cert_domain = "*.companieshouse.gov.uk"
-ec2_key_pair_name = "ch-aws-live"
-zone_id = "" # no route53 for live yet so empty zone id

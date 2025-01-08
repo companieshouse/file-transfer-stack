@@ -25,6 +25,7 @@ variable "cert_domain" {
 variable "ec2_key_pair_name" {
   type        = string
   description = "The key pair for SSH access to ec2 instances in the clusters."
+  default     = ""
 }
 
 variable "ec2_instance_type" {
@@ -94,6 +95,7 @@ variable "file_transfer_create_alb" {
 variable "zone_id" {
   type        = string
   description = "The ID of the hosted zone to contain the Route 53 record."
+  default     = ""
 }
 
 variable "internal_top_level_domain" {

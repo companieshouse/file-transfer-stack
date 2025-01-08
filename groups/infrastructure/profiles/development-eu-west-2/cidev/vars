@@ -2,6 +2,5 @@ environment = "cidev"
 aws_profile = "development-eu-west-2"
 enable_container_insights = true
 cert_domain = "cidev.aws.chdev.org"
-ec2_key_pair_name = "chs-cidev"
 zone_id = "Z2KSI4Z5ZN9NT0"
 internal_top_level_domain = ".cidev.aws.chdev.org"
