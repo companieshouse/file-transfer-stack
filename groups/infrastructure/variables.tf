@@ -22,11 +22,6 @@ variable "cert_domain" {
 }
 
 # EC2
-variable "ec2_key_pair_name" {
-  type        = string
-  description = "The key pair for SSH access to ec2 instances in the clusters."
-}
-
 variable "ec2_instance_type" {
   default     = "t3.medium"
   type        = string
@@ -88,4 +83,16 @@ variable "file_transfer_create_alb" {
   type        = bool
   description = "Override with value false if this ELB is not required in the environment"
   default     = true
+}
+
+# DNS
+variable "zone_id" {
+  type        = string
+  description = "The ID of the hosted zone to contain the Route 53 record."
+  default     = ""
+}
+
+variable "internal_top_level_domain" {
+  type        = string
+  description = "The type level of the DNS domain for internal access."
 }
