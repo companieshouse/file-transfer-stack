@@ -22,12 +22,6 @@ variable "cert_domain" {
 }
 
 # EC2
-variable "ec2_key_pair_name" {
-  type        = string
-  description = "The key pair for SSH access to ec2 instances in the clusters."
-  default     = ""
-}
-
 variable "ec2_instance_type" {
   default     = "t3.medium"
   type        = string
