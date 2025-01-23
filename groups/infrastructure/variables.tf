@@ -95,4 +95,5 @@ variable "zone_id" {
 variable "internal_top_level_domain" {
   type        = string
   description = "The type level of the DNS domain for internal access."
+  default     = ""
 }
