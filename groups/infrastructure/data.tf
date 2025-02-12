@@ -68,3 +68,7 @@ data "aws_subnet" "routing_subnets" {
 data "aws_ec2_managed_prefix_list" "admin" {
   name = "administration-cidr-ranges"
 }
+
+data "aws_ec2_managed_prefix_list" "shared_services_management" {
+  name = "shared-services-management-cidrs"
+}
