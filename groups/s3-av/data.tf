@@ -23,6 +23,7 @@ data "aws_iam_policy_document" "guard_duty_malware_protection_policy" {
   statement {
     sid    = "AllowEventsGuardDuty"
     effect = "Allow"
+
     actions = [
       "events:PutRule",
       "events:DescribeRule",
@@ -52,6 +53,7 @@ data "aws_iam_policy_document" "guard_duty_malware_protection_policy" {
   statement {
     sid    = "AllowS3GuardDuty"
     effect = "Allow"
+
     actions = [
       "s3:PutBucketNotification",
       "s3:GetBucketNotification",
@@ -73,6 +75,7 @@ data "aws_iam_policy_document" "guard_duty_malware_protection_policy" {
   statement {
     sid    = "AllowKMSGuardDuty"
     effect = "Allow"
+
     actions = [
       "kms:Decrypt",
       "kms:Encrypt",
@@ -100,6 +103,7 @@ data "aws_iam_policy_document" "kms_key_policy" {
   statement {
     sid    = "AllowGuardDutyRoleUsage"
     effect = "Allow"
+
     actions = [
       "kms:Encrypt",
       "kms:Decrypt",
