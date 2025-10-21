@@ -19,7 +19,9 @@ A group that creates an s3 bucket, kms key for encryption and enables a guarddut
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_s3_access_logging"></a> [s3\_access\_logging](#module\_s3\_access\_logging) | git@github.com:companieshouse/terraform-modules//aws/s3_access_logging | 1.0.353 |
 
 ## Resources
 
@@ -33,9 +35,11 @@ No modules.
 | [aws_kms_key.file_transfer_encryption_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
 | [aws_s3_bucket.file_transfer_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket_ownership_controls.file_transfer_bucket_ownership](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_ownership_controls) | resource |
+| [aws_s3_bucket_policy.https_only](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy) | resource |
 | [aws_s3_bucket_public_access_block.file_transfer_bucket_block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block) | resource |
 | [aws_s3_bucket_versioning.file_transfer_bucket_versioning](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_versioning) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_iam_policy_document.file_transfer_secure_ssl_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.guard_duty_malware_protection_assume_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.guard_duty_malware_protection_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.kms_key_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
@@ -45,6 +49,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_aws_account"></a> [aws\_account](#input\_aws\_account) | The AWS account where resources will be created. | `string` | n/a | yes |
 | <a name="input_file_transfer_bucket"></a> [file\_transfer\_bucket](#input\_file\_transfer\_bucket) | The name of the S3 bucket to create for user uploaded data. | `string` | n/a | yes |
 | <a name="input_file_transfer_kms_alias"></a> [file\_transfer\_kms\_alias](#input\_file\_transfer\_kms\_alias) | The alias to assign to the KMS key used to encrypt user uploaded data. | `string` | n/a | yes |
 | <a name="input_file_transfer_type"></a> [file\_transfer\_type](#input\_file\_transfer\_type) | The type of file transfer service to deploy | `string` | n/a | yes |

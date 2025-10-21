@@ -130,8 +130,8 @@ data "aws_iam_policy_document" "file_transfer_secure_ssl_policy" {
     }
 
     resources = [
-      "arn:aws:s3:::${var.aws_account}.${data.aws_region.current.name}.${var.file_transfer_bucket}",
-      "arn:aws:s3:::${var.aws_account}.${data.aws_region.current.name}.${var.file_transfer_bucket}/*"
+      "arn:aws:s3:::${var.file_transfer_bucket}",
+      "arn:aws:s3:::${var.file_transfer_bucket}/*"
     ]
 
     condition {
