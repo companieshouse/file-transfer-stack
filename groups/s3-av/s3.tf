@@ -37,3 +37,8 @@ resource "aws_s3_bucket_versioning" "file_transfer_bucket_versioning" {
     status = "Disabled"
   }
 }
+
+resource "aws_s3_bucket_policy" "https_only" {
+  bucket = aws_s3_bucket.file_transfer_bucket.id
+  policy = data.aws_iam_policy_document.file_transfer_secure_ssl_policy.json
+}

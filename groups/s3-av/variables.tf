@@ -1,3 +1,8 @@
+variable "aws_account" {
+  type        = string
+  description = "The AWS account where resources will be created."
+}
+
 variable "file_transfer_bucket" {
   type        = string
   description = "The name of the S3 bucket to create for user uploaded data."

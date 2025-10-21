@@ -14,3 +14,11 @@ terraform {
 }
 
 provider "aws" {}
+
+module "s3_access_logging" {
+  source = "git@github.com:companieshouse/terraform-modules//aws/s3_access_logging?ref=1.0.353"
+
+  aws_account           = var.aws_account
+  aws_region            = data.aws_region.current.name
+  source_s3_bucket_name = aws_s3_bucket.file_transfer_bucket.id
+}
