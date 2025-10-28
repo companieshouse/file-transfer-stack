@@ -14,47 +14,19 @@ terraform {
 }
 
 provider "aws" {
-  region  = var.aws_region
+  region = var.aws_region
 }
 
 module "file_transfer_alb" {
-  source                    = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
-  count                     = var.file_transfer_create_alb ? 1 : 0
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
+  count  = var.file_transfer_create_alb ? 1 : 0
 
-  environment               = var.environment
-  service                   = "file-transfer"
-  ssl_certificate_arn       = data.aws_acm_certificate.cert.arn
-  subnet_ids                = values(local.routing_subnet_ids)
-  vpc_id                    = data.aws_vpc.vpc.id
-  route53_domain_name       = var.cert_domain
-
-  create_security_group     = true
-  internal                  = true
-  ingress_cidrs             = local.ingress_cidrs_private
-  ingress_prefix_list_ids   = local.ingress_prefix_list_ids
-  service_configuration = {
-    listener_config = {
-      listener_config = {
-        default_action_type = "fixed-response"
-        port                = 443
-        fixed_response = {
-          status_code  = 404
-        }
-      }
-    }
-  }
-}
-
-module "secure_file_transfer_alb" {
-  source                  = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
-  count                   = var.secure_file_transfer_create_alb ? 1 : 0
-
-  environment             = var.environment
-  service                 = "secure-file-transfer"
-  ssl_certificate_arn     = data.aws_acm_certificate.cert.arn
-  subnet_ids              = values(local.routing_subnet_ids)
-  vpc_id                  = data.aws_vpc.vpc.id
-  route53_domain_name     = var.cert_domain
+  environment         = var.environment
+  service             = "file-transfer"
+  ssl_certificate_arn = data.aws_acm_certificate.cert.arn
+  subnet_ids          = values(local.routing_subnet_ids)
+  vpc_id              = data.aws_vpc.vpc.id
+  route53_domain_name = var.cert_domain
 
   create_security_group   = true
   internal                = true
@@ -66,7 +38,35 @@ module "secure_file_transfer_alb" {
         default_action_type = "fixed-response"
         port                = 443
         fixed_response = {
-          status_code  = 404
+          status_code = 404
+        }
+      }
+    }
+  }
+}
+
+module "secure_file_transfer_alb" {
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
+  count  = var.secure_file_transfer_create_alb ? 1 : 0
+
+  environment         = var.environment
+  service             = "secure-file-transfer"
+  ssl_certificate_arn = data.aws_acm_certificate.cert.arn
+  subnet_ids          = values(local.routing_subnet_ids)
+  vpc_id              = data.aws_vpc.vpc.id
+  route53_domain_name = var.cert_domain
+
+  create_security_group   = true
+  internal                = true
+  ingress_cidrs           = local.ingress_cidrs_private
+  ingress_prefix_list_ids = local.ingress_prefix_list_ids
+  service_configuration = {
+    listener_config = {
+      listener_config = {
+        default_action_type = "fixed-response"
+        port                = 443
+        fixed_response = {
+          status_code = 404
         }
       }
     }
@@ -93,4 +93,3 @@ module "ecs-cluster" {
   enable_asg_autoscaling      = var.enable_asg_autoscaling
   notify_topic_slack_endpoint = local.notify_topic_slack_endpoint
 }
-
