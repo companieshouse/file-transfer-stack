@@ -87,7 +87,7 @@ variable "file_transfer_create_alb" {
 
 variable "private_zone" {
   type        = bool
-  description = "Whether Route53 private zone is private for the domain"
+  description = "Whether Route53 zone is private for the domain"
   default     = false
 }
 
