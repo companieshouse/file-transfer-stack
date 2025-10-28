@@ -85,15 +85,14 @@ variable "file_transfer_create_alb" {
   default     = true
 }
 
-# DNS
-variable "zone_id" {
-  type        = string
-  description = "The ID of the hosted zone to contain the Route 53 record."
-  default     = ""
+variable "private_zone" {
+  type        = bool
+  description = "Whether Route53 zone is private for the domain"
+  default     = false
 }
 
-variable "internal_top_level_domain" {
-  type        = string
-  description = "The type level of the DNS domain for internal access."
-  default     = ""
+variable "protect_regime" {
+  type        = bool
+  description = "Whether the configuration is for a protect regime account"
+  default     = false
 }

@@ -13,19 +13,8 @@ data "aws_subnets" "application" {
   }
 }
 
-data "aws_subnets" "private" {
-  filter {
-    name   = "tag:Name"
-    values = [local.application_subnet_pattern]
-  }
-  filter {
-    name   = "tag:NetworkType"
-    values = ["private"]
-  }
-}
-
-data "aws_subnet" "private" {
-  for_each = toset(data.aws_subnets.private.ids)
+data "aws_subnet" "application" {
+  for_each = toset(data.aws_subnets.application.ids)
   id       = each.value
 }
 
@@ -34,22 +23,6 @@ data "aws_vpc" "vpc" {
     name   = "tag:Name"
     values = [local.vpc_name]
   }
-}
-
-data "aws_subnets" "management" {
-  filter {
-    name   = "tag:Name"
-    values = [local.application_subnet_pattern]
-  }
-  filter {
-    name   = "tag:Service"
-    values = ["management"]
-  }
-}
-
-data "aws_subnet" "management" {
-  for_each = toset(data.aws_subnets.management.ids)
-  id       = each.value
 }
 
 data "aws_acm_certificate" "cert" {
@@ -71,4 +44,11 @@ data "aws_ec2_managed_prefix_list" "admin" {
 
 data "aws_ec2_managed_prefix_list" "shared_services_management" {
   name = "shared-services-management-cidrs"
+}
+
+data "aws_route53_zone" "zone" {
+  count = (var.secure_file_transfer_create_alb || var.file_transfer_create_alb) && trimspace(local.zone_name) != "" ? 1 : 0
+
+  name         = local.zone_name
+  private_zone = var.private_zone
 }

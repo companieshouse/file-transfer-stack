@@ -1,8 +1,8 @@
 resource "aws_route53_record" "file_transfer_alb_r53_record" {
-  count   = var.file_transfer_create_alb && trimspace(var.zone_id) != "" && trimspace(var.internal_top_level_domain) != "" ? 1 : 0
+  count = var.file_transfer_create_alb && trimspace(local.zone_name) != "" ? 1 : 0
 
-  zone_id         = var.zone_id
-  name            = "file-transfer${var.internal_top_level_domain}"
+  zone_id         = data.aws_route53_zone.zone[0].zone_id
+  name            = "file-transfer.${var.environment}.${local.zone_name}"
   type            = "A"
   allow_overwrite = true
 
@@ -12,14 +12,14 @@ resource "aws_route53_record" "file_transfer_alb_r53_record" {
     evaluate_target_health = false
   }
 
-  depends_on = [ module.file_transfer_alb ]
+  depends_on = [module.file_transfer_alb]
 }
 
 resource "aws_route53_record" "secure_file_transfer_alb_r53_record" {
-  count   = var.secure_file_transfer_create_alb && trimspace(var.zone_id) != ""  && trimspace(var.internal_top_level_domain) != "" ? 1 : 0
+  count = var.secure_file_transfer_create_alb && trimspace(local.zone_name) != "" ? 1 : 0
 
-  zone_id         = var.zone_id
-  name            = "secure-file-transfer${var.internal_top_level_domain}"
+  zone_id = data.aws_route53_zone.zone[0].zone_id
+  name    = "secure-file-transfer.${var.environment}.${local.zone_name}"
 
   type            = "A"
   allow_overwrite = true
@@ -30,5 +30,5 @@ resource "aws_route53_record" "secure_file_transfer_alb_r53_record" {
     evaluate_target_health = false
   }
 
-  depends_on = [ module.secure_file_transfer_alb ]
+  depends_on = [module.secure_file_transfer_alb]
 }
