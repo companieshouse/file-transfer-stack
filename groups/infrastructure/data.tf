@@ -7,6 +7,10 @@ data "aws_subnets" "application" {
     name   = "tag:Name"
     values = [local.application_subnet_pattern]
   }
+  filter {
+    name   = "tag:Name"
+    values = ["*application*"]
+  }
 }
 
 data "aws_subnet" "application" {
