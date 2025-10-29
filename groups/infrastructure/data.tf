@@ -8,8 +8,8 @@ data "aws_subnets" "application" {
     values = [local.application_subnet_pattern]
   }
   filter {
-    name   = "tag:NetworkType"
-    values = ["private"]
+    name   = "tag:Name"
+    values = ["*application*"]
   }
 }
 
