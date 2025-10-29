@@ -2,6 +2,7 @@ locals {
   stack_name     = "file-transfer"
   stack_fullname = "${local.stack_name}-stack"
   name_prefix    = "${local.stack_name}-${var.environment}"
+  vault_path     = "${var.protect_regime ? "secure-" : ""}applications/${var.aws_profile}/${var.environment}/${local.stack_fullname}"
 
   stack_secrets = jsondecode(data.vault_generic_secret.secrets.data_json)
   zone_name     = lookup(local.stack_secrets, "zone_name", "")

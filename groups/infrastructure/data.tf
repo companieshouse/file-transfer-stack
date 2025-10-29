@@ -1,5 +1,5 @@
 data "vault_generic_secret" "secrets" {
-  path = "applications/${var.aws_profile}/${var.environment}/${local.stack_fullname}"
+  path = local.vault_path
 }
 
 data "aws_subnets" "application" {
