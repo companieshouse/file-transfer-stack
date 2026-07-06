@@ -4,15 +4,15 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3, < 2.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0, < 6.0 |
-| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 4.0, < 5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0, < 7.0 |
+| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 5.0, < 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0, < 6.0 |
-| <a name="provider_vault"></a> [vault](#provider\_vault) | >= 4.0, < 5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.53.0 |
+| <a name="provider_vault"></a> [vault](#provider\_vault) | 5.10.1 |
 
 ## Modules
 
@@ -57,7 +57,7 @@
 | <a name="input_file_transfer_create_alb"></a> [file\_transfer\_create\_alb](#input\_file\_transfer\_create\_alb) | Override with value false if this ELB is not required in the environment | `bool` | `true` | no |
 | <a name="input_hashicorp_vault_password"></a> [hashicorp\_vault\_password](#input\_hashicorp\_vault\_password) | The password used when retrieving configuration from Hashicorp Vault | `string` | n/a | yes |
 | <a name="input_hashicorp_vault_username"></a> [hashicorp\_vault\_username](#input\_hashicorp\_vault\_username) | The username used when retrieving configuration from Hashicorp Vault | `string` | n/a | yes |
-| <a name="input_private_zone"></a> [private\_zone](#input\_private\_zone) | Whether Route53 private zone is private for the domain | `bool` | `false` | no |
+| <a name="input_private_zone"></a> [private\_zone](#input\_private\_zone) | Whether Route53 zone is private for the domain | `bool` | `false` | no |
 | <a name="input_protect_regime"></a> [protect\_regime](#input\_protect\_regime) | Whether the configuration is for a protect regime account | `bool` | `false` | no |
 | <a name="input_secure_file_transfer_create_alb"></a> [secure\_file\_transfer\_create\_alb](#input\_secure\_file\_transfer\_create\_alb) | Override with value false if this ALB is not required in the environment | `bool` | `true` | no |
 
