@@ -17,6 +17,9 @@ locals {
     data.aws_subnet.routing_subnets.*.id
   )
 
-  ingress_cidrs_private   = [for subnet in data.aws_subnet.application : subnet.cidr_block]
+  ingress_cidrs_private = concat(
+    [for subnet in data.aws_subnet.application : subnet.cidr_block],
+    [for subnet in data.aws_subnet.routing_subnets : subnet.cidr_block]
+  )
   ingress_prefix_list_ids = var.protect_regime ? [] : [data.aws_ec2_managed_prefix_list.admin.id, data.aws_ec2_managed_prefix_list.shared_services_management.id]
 }
