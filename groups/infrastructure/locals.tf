@@ -21,5 +21,11 @@ locals {
     [for subnet in data.aws_subnet.application : subnet.cidr_block],
     [for subnet in data.aws_subnet.routing_subnets : subnet.cidr_block]
   )
-  ingress_prefix_list_ids = var.protect_regime ? [] : [data.aws_ec2_managed_prefix_list.admin.id, data.aws_ec2_managed_prefix_list.shared_services_management.id]
+  ingress_prefix_list_ids = var.protect_regime ? [] : concat(
+    [
+      data.aws_ec2_managed_prefix_list.admin.id,
+      data.aws_ec2_managed_prefix_list.shared_services_management.id,
+    ],
+    var.environment == "staging" ? [data.aws_ec2_managed_prefix_list.shared_services_test[0].id] : []
+  )
 }

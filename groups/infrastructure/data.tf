@@ -46,6 +46,11 @@ data "aws_ec2_managed_prefix_list" "shared_services_management" {
   name = "shared-services-management-cidrs"
 }
 
+data "aws_ec2_managed_prefix_list" "shared_services_test" {
+  count = var.environment == "staging" ? 1 : 0
+  name  = "shared-services-test-cidrs"
+}
+
 data "aws_route53_zone" "zone" {
   count = (var.secure_file_transfer_create_alb || var.file_transfer_create_alb) && trimspace(local.zone_name) != "" ? 1 : 0
 
