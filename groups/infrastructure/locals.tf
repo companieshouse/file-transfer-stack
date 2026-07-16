@@ -26,6 +26,6 @@ locals {
       data.aws_ec2_managed_prefix_list.admin.id,
       data.aws_ec2_managed_prefix_list.shared_services_management.id,
     ],
-    var.environment == "staging" ? [data.aws_ec2_managed_prefix_list.shared_services_test[0].id] : []
+    var.enable_concourse_access ? [data.aws_ec2_managed_prefix_list.shared_services_test[0].id] : []
   )
 }

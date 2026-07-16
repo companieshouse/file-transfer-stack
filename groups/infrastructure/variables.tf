@@ -96,3 +96,8 @@ variable "protect_regime" {
   description = "Whether the configuration is for a protect regime account"
   default     = false
 }
+variable "enable_concourse_access" {
+  type        = bool
+  description = "Whether to enable Concourse access"
+  default     = false
+}

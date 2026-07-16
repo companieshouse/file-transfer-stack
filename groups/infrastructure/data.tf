@@ -47,7 +47,7 @@ data "aws_ec2_managed_prefix_list" "shared_services_management" {
 }
 
 data "aws_ec2_managed_prefix_list" "shared_services_test" {
-  count = var.environment == "staging" ? 1 : 0
+  count = var.enable_concourse_access ? 1 : 0
   name  = "shared-services-test-cidrs"
 }
 
