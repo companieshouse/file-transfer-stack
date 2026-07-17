@@ -24,8 +24,10 @@ locals {
   ingress_prefix_list_ids = var.protect_regime ? [] : concat(
     [
       data.aws_ec2_managed_prefix_list.admin.id,
-      data.aws_ec2_managed_prefix_list.shared_services_management.id,
     ],
-    var.enable_concourse_access ? [data.aws_ec2_managed_prefix_list.shared_services_test[0].id] : []
+    var.enable_concourse_access ? [
+      data.aws_ec2_managed_prefix_list.shared_services_management[0].id,
+      data.aws_ec2_managed_prefix_list.shared_services_test[0].id
+    ] : []
   )
 }

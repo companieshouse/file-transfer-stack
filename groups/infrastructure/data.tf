@@ -43,11 +43,14 @@ data "aws_ec2_managed_prefix_list" "admin" {
 }
 
 data "aws_ec2_managed_prefix_list" "shared_services_management" {
+  count = var.enable_concourse_access ? 1 : 0
+  
   name = "shared-services-management-cidrs"
 }
 
 data "aws_ec2_managed_prefix_list" "shared_services_test" {
   count = var.enable_concourse_access ? 1 : 0
+
   name  = "shared-services-test-cidrs"
 }
 
