@@ -73,12 +73,6 @@ variable "enable_container_insights" {
 }
 
 # Count variables for - ECS
-variable "secure_file_transfer_create_alb" {
-  type        = bool
-  description = "Override with value false if this ALB is not required in the environment"
-  default     = true
-}
-
 variable "file_transfer_create_alb" {
   type        = bool
   description = "Override with value false if this ELB is not required in the environment"
@@ -91,11 +85,6 @@ variable "private_zone" {
   default     = false
 }
 
-variable "protect_regime" {
-  type        = bool
-  description = "Whether the configuration is for a protect regime account"
-  default     = false
-}
 variable "enable_concourse_access" {
   type        = bool
   description = "Whether to enable Concourse access"

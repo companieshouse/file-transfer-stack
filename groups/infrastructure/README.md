@@ -20,17 +20,16 @@
 |------|--------|---------|
 | <a name="module_ecs-cluster"></a> [ecs-cluster](#module\_ecs-cluster) | git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-cluster | 1.0.296 |
 | <a name="module_file_transfer_alb"></a> [file\_transfer\_alb](#module\_file\_transfer\_alb) | git@github.com:companieshouse/terraform-modules//aws/application_load_balancer | 1.0.296 |
-| <a name="module_secure_file_transfer_alb"></a> [secure\_file\_transfer\_alb](#module\_secure\_file\_transfer\_alb) | git@github.com:companieshouse/terraform-modules//aws/application_load_balancer | 1.0.296 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
 | [aws_route53_record.file_transfer_alb_r53_record](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
-| [aws_route53_record.secure_file_transfer_alb_r53_record](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_acm_certificate.cert](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/acm_certificate) | data source |
 | [aws_ec2_managed_prefix_list.admin](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ec2_managed_prefix_list) | data source |
 | [aws_ec2_managed_prefix_list.shared_services_management](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ec2_managed_prefix_list) | data source |
+| [aws_ec2_managed_prefix_list.shared_services_test](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ec2_managed_prefix_list) | data source |
 | [aws_route53_zone.zone](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 | [aws_subnet.application](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
 | [aws_subnet.routing_subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
@@ -52,14 +51,13 @@
 | <a name="input_cert_domain"></a> [cert\_domain](#input\_cert\_domain) | The certificate domain to use. | `string` | n/a | yes |
 | <a name="input_ec2_instance_type"></a> [ec2\_instance\_type](#input\_ec2\_instance\_type) | The instance type for ec2 instances in the clusters. | `string` | `"t3.medium"` | no |
 | <a name="input_enable_asg_autoscaling"></a> [enable\_asg\_autoscaling](#input\_enable\_asg\_autoscaling) | Whether to enable auto-scaling of the ASG by creating a capacity provider for the ECS cluster. | `bool` | `true` | no |
+| <a name="input_enable_concourse_access"></a> [enable\_concourse\_access](#input\_enable\_concourse\_access) | Whether to enable Concourse access | `bool` | `false` | no |
 | <a name="input_enable_container_insights"></a> [enable\_container\_insights](#input\_enable\_container\_insights) | A boolean value indicating whether to enable Container Insights or not | `bool` | `true` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment name, defined in envrionments vars. | `string` | n/a | yes |
 | <a name="input_file_transfer_create_alb"></a> [file\_transfer\_create\_alb](#input\_file\_transfer\_create\_alb) | Override with value false if this ELB is not required in the environment | `bool` | `true` | no |
 | <a name="input_hashicorp_vault_password"></a> [hashicorp\_vault\_password](#input\_hashicorp\_vault\_password) | The password used when retrieving configuration from Hashicorp Vault | `string` | n/a | yes |
 | <a name="input_hashicorp_vault_username"></a> [hashicorp\_vault\_username](#input\_hashicorp\_vault\_username) | The username used when retrieving configuration from Hashicorp Vault | `string` | n/a | yes |
 | <a name="input_private_zone"></a> [private\_zone](#input\_private\_zone) | Whether Route53 zone is private for the domain | `bool` | `false` | no |
-| <a name="input_protect_regime"></a> [protect\_regime](#input\_protect\_regime) | Whether the configuration is for a protect regime account | `bool` | `false` | no |
-| <a name="input_secure_file_transfer_create_alb"></a> [secure\_file\_transfer\_create\_alb](#input\_secure\_file\_transfer\_create\_alb) | Override with value false if this ALB is not required in the environment | `bool` | `true` | no |
 
 ## Outputs
 
