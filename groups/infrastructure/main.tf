@@ -45,35 +45,6 @@ module "file_transfer_alb" {
   }
 }
 
-module "secure_file_transfer_alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.296"
-  count  = var.secure_file_transfer_create_alb ? 1 : 0
-
-  environment         = var.environment
-  service             = "secure-file-transfer"
-  ssl_certificate_arn = data.aws_acm_certificate.cert.arn
-  subnet_ids          = values(local.routing_subnet_ids)
-  vpc_id              = data.aws_vpc.vpc.id
-  route53_domain_name = var.cert_domain
-
-  create_security_group   = true
-  internal                = true
-  ingress_cidrs           = local.ingress_cidrs_private
-  ingress_prefix_list_ids = local.ingress_prefix_list_ids
-  service_configuration = {
-    listener_config = {
-      listener_config = {
-        default_action_type = "fixed-response"
-        port                = 443
-        fixed_response = {
-          status_code = 404
-        }
-      }
-    }
-  }
-}
-
-
 module "ecs-cluster" {
   source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-cluster?ref=1.0.296"
 
